@@ -3,6 +3,8 @@ package com.example.joelercoaster.droidlett;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ public class UserAreaActivity extends AppCompatActivity {
         //final TextView tvLogged = (TextView) findViewById(R.id.tvLogged);
         final TextView tvUserEmail = (TextView) findViewById(R.id.tvUserEmail);
         //final TextView tvMessage = (TextView) findViewById(R.id.tvMessage);
+        Button bLogout = (Button) findViewById(R.id.bLogout);
 
         Bundle extras = getIntent().getExtras();
 
@@ -38,5 +41,15 @@ public class UserAreaActivity extends AppCompatActivity {
         tvUserEmail.setText(userEmail);
 
         Intercom.client().setLauncherVisibility(Intercom.Visibility.VISIBLE);
+
+        bLogout.setOnClickListener(new View.OnClickListener() {
+           public void onClick(View v) {
+               Intercom.client().logout();
+               Intent registerIntent = new Intent(UserAreaActivity.this, LoginActivity.class);
+               UserAreaActivity.this.startActivity(registerIntent);
+           }
+        });
+
+
     }
 }
