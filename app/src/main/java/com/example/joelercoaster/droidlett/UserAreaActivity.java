@@ -49,7 +49,5 @@ public class UserAreaActivity extends AppCompatActivity {
                UserAreaActivity.this.startActivity(registerIntent);
            }
         });
-
-
     }
 }

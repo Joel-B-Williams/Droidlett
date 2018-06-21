@@ -33,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent userAreaIntent = new Intent(LoginActivity.this, UserAreaActivity.class);
                 userAreaIntent.putExtra("USER_EMAIL", etEmail.getText().toString());
-
                 LoginActivity.this.startActivity(userAreaIntent);
             }
         });
