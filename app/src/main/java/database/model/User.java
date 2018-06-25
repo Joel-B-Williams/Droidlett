@@ -17,7 +17,7 @@ public class User {
 
     // Create table SQL Query
     public static final String CREATE_TABLE =
-            "CREATE TABLE " + TABLE_NAME + "("
+            "CREATE TABLE IF NOT EXISTS" + TABLE_NAME + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + COLUMN_EMAIL + " TEXT, "
                     + COLUMN_PASSWORD + " TEXT, "
