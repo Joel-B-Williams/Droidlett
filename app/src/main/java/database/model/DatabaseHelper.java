@@ -26,8 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if exists
-        db.execSQL("DROP TABLE IF EXISTS ", User.TABLE_NAME);
-
+        db.execSQL("DROP TABLE IF EXISTS " + User.TABLE_NAME);
         // Create new tables
         onCreate(db);
     }
@@ -52,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public User getUser(long id) {
+    public User getUser(String email) {
         // get readable db
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -63,8 +62,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         */
         Cursor cursor = db.query(User.TABLE_NAME,
                 new String[]{User.COLUMN_ID, User.COLUMN_EMAIL, User.COLUMN_PASSWORD, User.COLUMN_TIMESTAMP},
-                User.COLUMN_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
+                User.COLUMN_EMAIL + "=?",
+                new String[]{String.valueOf(email)}, null, null, null, null);
 
         if (cursor != null)
             cursor.moveToFirst();
