@@ -28,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
         bRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // save user to database
-                if (etPassword.getText().toString().equals(etPasswordConfirmation.getText().toString())) {
+                if (!etEmail.getText().toString().isEmpty() && !etPassword.getText().toString().isEmpty() && etPassword.getText().toString().equals(etPasswordConfirmation.getText().toString())) {
 
                     db.insertUser(etEmail.getText().toString(), etPassword.getText().toString());
 
@@ -37,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     RegisterActivity.this.startActivity(registerIntent);
                 } else {
-
+                    // failed registration
                     Intent registerIntent = new Intent(RegisterActivity.this, RegisterActivity.class);
                     RegisterActivity.this.startActivity(registerIntent);
                 }
