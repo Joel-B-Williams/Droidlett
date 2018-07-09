@@ -35,14 +35,10 @@ public class LoginActivity extends AppCompatActivity {
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // check db for email/pw combo
 
-                /*
-                TODO - need to verify that email is not null, etc; storing value & failing on a 0-count array type thing
-                 */
                 User user = db.getUser(etEmail.getText().toString());
 
-                if (user.getPassword().equalsIgnoreCase(etPassword.getText().toString())) {
+                if ( ( user != null ) && ( user.getPassword().equalsIgnoreCase(etPassword.getText().toString()) ) ) {
 
                     Intent userAreaIntent = new Intent(LoginActivity.this, UserAreaActivity.class);
                     userAreaIntent.putExtra("USER_EMAIL", etEmail.getText().toString());
