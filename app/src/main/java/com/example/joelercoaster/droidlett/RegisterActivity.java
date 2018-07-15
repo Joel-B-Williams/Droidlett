@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import database.model.DatabaseHelper;
 import io.intercom.android.sdk.Intercom;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -17,6 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         Intercom.client().setLauncherVisibility(Intercom.Visibility.GONE);
+        final DatabaseHelper db = new DatabaseHelper(getApplicationContext());
 
         final EditText etEmail = (EditText) findViewById(R.id.etEmail);
         final EditText etPassword = (EditText) findViewById(R.id.etPassword);
@@ -25,8 +27,20 @@ public class RegisterActivity extends AppCompatActivity {
 
         bRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                RegisterActivity.this.startActivity(registerIntent);
+                // save user to database
+                if (!etEmail.getText().toString().isEmpty() && !etPassword.getText().toString().isEmpty() && etPassword.getText().toString().equals(etPasswordConfirmation.getText().toString())) {
+
+                    db.insertUser(etEmail.getText().toString(), etPassword.getText().toString());
+
+                    Intent registerIntent = new Intent(RegisterActivity.this, UserAreaActivity.class);
+                    registerIntent.putExtra("USER_EMAIL", etEmail.getText().toString());
+
+                    RegisterActivity.this.startActivity(registerIntent);
+                } else {
+                    // failed registration
+                    Intent registerIntent = new Intent(RegisterActivity.this, RegisterActivity.class);
+                    RegisterActivity.this.startActivity(registerIntent);
+                }
             }
         });
     }
