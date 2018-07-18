@@ -21,14 +21,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText etEmail = (EditText) findViewById(R.id.etEmail);
-        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-        final Button bLogin = (Button) findViewById(R.id.bLogin);
-        final TextView registerLink = (TextView) findViewById(R.id.tvRegister);
+        final EditText etEmail = findViewById(R.id.etEmail);
+        final EditText etPassword = findViewById(R.id.etPassword);
+        final Button bLogin = findViewById(R.id.bLogin);
+        final TextView registerLink = findViewById(R.id.tvRegister);
 
         final DatabaseHelper db = new DatabaseHelper(getApplicationContext());
-
-        email = etEmail.getText().toString();
 
         Intercom.client().setLauncherVisibility(Intercom.Visibility.GONE);
 
@@ -36,16 +34,21 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String email = etEmail.getText().toString();
+                String password = etPassword.getText().toString();
+
                 User user = db.getUser(etEmail.getText().toString());
 
-                if ( ( user != null ) && ( user.getPassword().equalsIgnoreCase(etPassword.getText().toString()) ) ) {
+                if ( (user != null) && (user.getPassword().equalsIgnoreCase(password)) ) {
 
                     Intent userAreaIntent = new Intent(LoginActivity.this, UserAreaActivity.class);
-                    userAreaIntent.putExtra("USER_EMAIL", etEmail.getText().toString());
+                    userAreaIntent.putExtra("USER_EMAIL", email);
+                    finish();
                     LoginActivity.this.startActivity(userAreaIntent);
                 } else {
 
                     Intent userAreaIntent = new Intent(LoginActivity.this, UserAreaActivity.class);
+                    finish();
                     LoginActivity.this.startActivity(userAreaIntent);
                 }
             }
@@ -54,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(registerIntent);
             }
