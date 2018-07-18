@@ -55,7 +55,11 @@ public class UserAreaActivity extends AppCompatActivity {
                UserAreaActivity.this.startActivity(registerIntent);
            }
         });
+    }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intercom.client().logout();
     }
 }
