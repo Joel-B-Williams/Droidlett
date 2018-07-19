@@ -22,18 +22,20 @@ public class UserAreaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
 
-        //final TextView tvLogged = (TextView) findViewById(R.id.tvLogged);
-        final TextView tvUserEmail = (TextView) findViewById(R.id.tvUserEmail);
-        //final TextView tvMessage = (TextView) findViewById(R.id.tvMessage);
-        Button bLogout = (Button) findViewById(R.id.bLogout);
+        //final TextView tvMessage = findViewById(R.id.tvMessage);
+        //final TextView tvLogged = findViewById(R.id.tvLogged);
+        final TextView tvUserEmail = findViewById(R.id.tvUserEmail);
+        Button bLogout = findViewById(R.id.bLogout);
 
-        Bundle extras = getIntent().getExtras();
+        final Bundle extras = getIntent().getExtras();
 
         if (extras != null && extras.getString("USER_EMAIL") != null && !extras.getString("USER_EMAIL").isEmpty()) {
+
             userEmail = extras.getString("USER_EMAIL");
             Registration registration = Registration.create().withEmail(userEmail);
             Intercom.client().registerIdentifiedUser(registration);
         } else {
+
             userEmail = "Visitor";
             Intercom.client().registerUnidentifiedUser();
         }
@@ -41,13 +43,24 @@ public class UserAreaActivity extends AppCompatActivity {
         tvUserEmail.setText(userEmail);
 
         Intercom.client().setLauncherVisibility(Intercom.Visibility.VISIBLE);
+        Intercom.client().handlePushMessage();
 
         bLogout.setOnClickListener(new View.OnClickListener() {
            public void onClick(View v) {
+
                Intercom.client().logout();
+
                Intent registerIntent = new Intent(UserAreaActivity.this, LoginActivity.class);
+               registerIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+               finish();
                UserAreaActivity.this.startActivity(registerIntent);
            }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intercom.client().logout();
     }
 }

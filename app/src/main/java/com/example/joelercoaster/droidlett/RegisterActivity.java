@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import database.model.DatabaseHelper;
 import io.intercom.android.sdk.Intercom;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -18,15 +19,33 @@ public class RegisterActivity extends AppCompatActivity {
 
         Intercom.client().setLauncherVisibility(Intercom.Visibility.GONE);
 
-        final EditText etEmail = (EditText) findViewById(R.id.etEmail);
-        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-        final EditText etPasswordConfirmation = (EditText) findViewById(R.id.etPasswordConfirm);
-        final Button bRegister = (Button) findViewById(R.id.bRegister);
+        final DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+
+        final EditText etEmail = findViewById(R.id.etEmail);
+        final EditText etPassword = findViewById(R.id.etPassword);
+        final EditText etPasswordConfirmation = findViewById(R.id.etPasswordConfirm);
+        final Button bRegister = findViewById(R.id.bRegister);
 
         bRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                RegisterActivity.this.startActivity(registerIntent);
+
+                String email = etEmail.getText().toString();
+                String password = etPassword.getText().toString();
+                String passwordConfirmation = etPasswordConfirmation.getText().toString();
+
+                if (!email.isEmpty() && !password.isEmpty() && password.equals(passwordConfirmation)) {
+                    // save user to database & move to user activity
+                    db.insertUser(email, password);
+
+                    Intent registerIntent = new Intent(RegisterActivity.this, UserAreaActivity.class);
+                    registerIntent.putExtra("USER_EMAIL", email);
+
+                    RegisterActivity.this.startActivity(registerIntent);
+                } else {
+                    // failed registration
+                    Intent registerIntent = new Intent(RegisterActivity.this, RegisterActivity.class);
+                    RegisterActivity.this.startActivity(registerIntent);
+                }
             }
         });
     }
