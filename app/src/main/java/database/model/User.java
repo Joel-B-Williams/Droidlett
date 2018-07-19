@@ -31,13 +31,13 @@ public class User {
         this.timestamp = timestamp;
     }
 
-    public int getID() { return id; }
-    public String getEmail() { return email; }
+    //public int getID() { return id; }
+    //public String getEmail() { return email; }
     public String getPassword() { return password; }
 
     public void setId(int id) { this.id = id; }
-    public void setEmail(String email) { this.email = email; }
-    public void setPassword(String password) { this.password = password; }
-    public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
+    //public void setEmail(String email) { this.email = email; }
+    //public void setPassword(String password) { this.password = password; }
+    //public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
 
 }

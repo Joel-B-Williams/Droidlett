@@ -18,22 +18,27 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         Intercom.client().setLauncherVisibility(Intercom.Visibility.GONE);
+
         final DatabaseHelper db = new DatabaseHelper(getApplicationContext());
 
-        final EditText etEmail = (EditText) findViewById(R.id.etEmail);
-        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-        final EditText etPasswordConfirmation = (EditText) findViewById(R.id.etPasswordConfirm);
-        final Button bRegister = (Button) findViewById(R.id.bRegister);
+        final EditText etEmail = findViewById(R.id.etEmail);
+        final EditText etPassword = findViewById(R.id.etPassword);
+        final EditText etPasswordConfirmation = findViewById(R.id.etPasswordConfirm);
+        final Button bRegister = findViewById(R.id.bRegister);
 
         bRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // save user to database
-                if (!etEmail.getText().toString().isEmpty() && !etPassword.getText().toString().isEmpty() && etPassword.getText().toString().equals(etPasswordConfirmation.getText().toString())) {
 
-                    db.insertUser(etEmail.getText().toString(), etPassword.getText().toString());
+                String email = etEmail.getText().toString();
+                String password = etPassword.getText().toString();
+                String passwordConfirmation = etPasswordConfirmation.getText().toString();
+
+                if (!email.isEmpty() && !password.isEmpty() && password.equals(passwordConfirmation)) {
+                    // save user to database & move to user activity
+                    db.insertUser(email, password);
 
                     Intent registerIntent = new Intent(RegisterActivity.this, UserAreaActivity.class);
-                    registerIntent.putExtra("USER_EMAIL", etEmail.getText().toString());
+                    registerIntent.putExtra("USER_EMAIL", email);
 
                     RegisterActivity.this.startActivity(registerIntent);
                 } else {
