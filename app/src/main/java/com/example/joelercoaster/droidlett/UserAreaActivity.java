@@ -11,6 +11,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import io.intercom.android.sdk.Intercom;
+import io.intercom.android.sdk.UnreadConversationCountListener;
 import io.intercom.android.sdk.identity.Registration;
 
 public class UserAreaActivity extends AppCompatActivity {
@@ -44,6 +45,7 @@ public class UserAreaActivity extends AppCompatActivity {
 
         Intercom.client().setLauncherVisibility(Intercom.Visibility.VISIBLE);
 
+
         bLogout.setOnClickListener(new View.OnClickListener() {
            public void onClick(View v) {
 
@@ -58,8 +60,16 @@ public class UserAreaActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intercom.client().handlePushMessage();
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         Intercom.client().logout();
     }
 }

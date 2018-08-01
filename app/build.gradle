@@ -27,4 +27,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'com.android.volley:volley:1.0.0'
     compile 'io.intercom.android:intercom-sdk-base:5.+'
+    compile 'com.google.firebase:firebase-core:16.0.0'
+    compile 'io.intercom.android:intercom-sdk-fcm:5.+'
+    compile 'com.google.firebase:firebase-messaging:17+'
 }
+
+apply plugin: 'com.google.gms.google-services'

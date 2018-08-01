@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
 
-                User user = db.getUser(etEmail.getText().toString());
+                User user = db.getUser(email);
 
                 if ( (user != null) && (user.getPassword().equalsIgnoreCase(password)) ) {
 
