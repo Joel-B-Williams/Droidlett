@@ -32,4 +32,12 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:17+'
 }
 
+def API_KEY = API_KEY ?: '"Define API_KEY"';
+def APP_ID = APP_ID ?: '"Define APP_ID"';
+
+android.buildTypes.each { type ->
+    type.buildConfigField('String', 'API_KEY', API_KEY)
+    type.buildConfigField('String', 'APP_ID', APP_ID)
+}
+
 apply plugin: 'com.google.gms.google-services'
