@@ -3,16 +3,24 @@ package com.example.joelercoaster.droidlett;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
+
 import org.w3c.dom.Text;
+
+import java.util.Map;
 
 import io.intercom.android.sdk.Intercom;
 import io.intercom.android.sdk.UnreadConversationCountListener;
 import io.intercom.android.sdk.identity.Registration;
+import io.intercom.android.sdk.push.IntercomPushClient;
 
 public class UserAreaActivity extends AppCompatActivity {
 
@@ -22,6 +30,8 @@ public class UserAreaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
+
+        Intercom.setLogLevel(Intercom.LogLevel.ERROR);
 
         //final TextView tvMessage = findViewById(R.id.tvMessage);
         //final TextView tvLogged = findViewById(R.id.tvLogged);
